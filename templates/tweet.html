@@ -1,0 +1,125 @@
+<html>
+<head>
+
+
+<link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<link type="text/css" rel="stylesheet" href="/static/materialize/css/materialize.min.css"  media="screen,projection"/>
+<link type="text/css" rel="stylesheet" href="/static/materialize/css/style.min.css"  media="screen,projection"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<script type="text/javascript" src="http://code.jquery.com/jquery-2.1.1.min.js"></script>
+<script type="text/javascript" src="/static/materialize/js/materialize.min.js"></script>
+
+
+<script type="text/javascript">
+  
+ document.addEventListener('DOMContentLoaded', function() {
+    var elems = document.querySelectorAll('.sidenav');
+    var instances = M.Sidenav.init(elems, options);
+  });
+
+  $(document).ready(function(){
+    $('.sidenav').sidenav();
+  });
+
+
+
+function verify() {
+  var xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+     document.getElementById("demo").innerHTML = this.responseText;
+    }
+  };
+  xhttp.open("GET", "ajax_info.txt", true);
+  xhttp.send();
+}
+
+
+function verify() {
+  var xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+     document.getElementById("demo").innerHTML = this.responseText;
+    }
+  };
+  xhttp.open("GET", "ajax_info.txt", true);
+  xhttp.send();
+}
+</script>
+
+
+
+<div class="navbar-fixed">    
+  <nav>
+      <div class="nav-wrapper" style="background:#11989E"> 
+      <center>
+               <div class="col s12">
+        <a href="/tweet" class="breadcrumb">Tweets</a>
+        <a href="/home" class="breadcrumb">Images</a>
+        <a href="/headlines" class="breadcrumb">Headlines</a>
+      </div>
+      </center>
+
+  </nav>
+</div>
+</head>
+
+
+      
+
+<body background="https://www.transparenttextures.com/patterns/arabesque.png" bgcolor="#4B7F52">
+{%block content%}
+<div id="container" style="width:100%;">  
+
+
+
+
+
+
+ <div class="row" >
+  <center>
+      <div class="col s12 m5 l4 container" style="margin-left:150px;margin-top: 70px">
+            <form action="/tweet" style="padding: 20px;" method = "POST" style="margin-top: 0px">
+       <!--      <center><img src="/media/pic/admin.png" style="height: 100px;z-index:10;position: relative; top: 12px"></center>    -->
+              <div class="card" style="padding-left:10px;margin-left: 250px;padding-right: 10px; top: -40px;z-index: 0;width: 500px;">
+                <div class="row" style="position: relative;top: 30px">
+                    <div class="input-field col s12">
+                     <textarea name="tweet" id="tweet" rows="8" cols="50" style="height: 7rem;"></textarea>
+                    </div>
+                </div>
+              <button class="btn cyan darken-3 " type= "submit" name="submit" style="margin: 0px;padding: 5px;height: 50px;width: 100%;margin-bottom: 10px ">Post</button>
+              </div>
+            </form>      
+        </div>
+        </center>
+    </div>
+
+
+
+{% for row in data %}  
+
+        
+                <div class="row">
+                    <center>
+                      <div class="card" style="margin-left: -80px;height: 180; width: 400;">
+                         <div style="float: top;height: 70%"><p style="padding-top: 25px;">{{ row.tweet }}</p> 
+                         </div>
+                         <div style="float: bottom;height: 30%;background-color: #f5f6f7;">
+                           <div style="float: left;height: 70%;padding-top: 15px;padding-left: 10px">Posted on : {{ row.added_on }} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ row.likes }} Likes</div>
+                           <div style="float: right;height: 30%;"><a class="btn-floating btn-large waves-effect waves-light  #35838f" style="height: 40px;width: 40px;top:8px"><i class="material-icons" style="line-height: 40px">thumb_up</i></a></div>
+                         </div>
+                      </div>
+                      </center>
+                  </div>
+
+         {% endfor %}
+  
+{% endblock %}
+</div>
+
+
+
+
+</body>
+
+</html>

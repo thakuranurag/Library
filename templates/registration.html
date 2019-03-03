@@ -1,0 +1,92 @@
+<html>
+<head>
+
+
+<link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<link type="text/css" rel="stylesheet" href="/static/materialize/css/materialize.min.css"  media="screen,projection"/>
+<link type="text/css" rel="stylesheet" href="/static/materialize/css/style.min.css"  media="screen,projection"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<script type="text/javascript" src="http://code.jquery.com/jquery-2.1.1.min.js"></script>
+<script type="text/javascript" src="/static/materialize/js/materialize.min.js"></script>
+
+
+
+<div class="navbar-fixed">    
+  <nav>
+      <div class="nav-wrapper" style="background:#11989E"> 
+          
+          <ul id="nav-mobile" class="right hide-on-med-and-down">
+          <span style="text-align: :center">Arz Kiya Hai!!</span>
+              
+          </ul>
+      </div>
+  </nav>
+</div>
+
+
+</head>
+
+<body>
+
+
+
+<div class="row" >
+	<center>
+    <div class="card col m12 l2"></div>
+    	<div class="col s12 m5 l4 container" style="margin-left:20%;margin-right:20% ;width: 60%">
+            <form  action="/register" style="padding: 20px;" method = "POST" style="margin-top: 0px">
+             <!-- <center><img src="/media/pic/admin.png" style="height: 100px;z-index:10;position: relative; top: 12px"></center> -->
+              <div class="card" style="padding: 20px; top: -20px;z-index: 0">
+                <div class="row" style="position: relative;top: 30px">
+                    <div class="input-field col s12">
+                     <input name="username" id="username" type="text" class="validate">
+                      <label for="username">Name</label>
+                    </div>
+                </div>
+                <div class="row">
+                  <div class="input-field col s6">
+                    <input name="email" id="email" type="email" class="validate">
+                      <label for="email">Email</label>
+                  </div>
+                
+                  <div class="input-field col s6">
+                    <input id="mobile" name="mobile" type="tel" class="validate">
+                      <label for="mobile">Mobile</label>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="input-field col s6">
+                    <input name="dob" id="dob" type="date" class="validate">
+                      <label for="dob">Date Of Birth</label>
+                  </div>
+                
+                  <div class="input-field col s6">
+                    <input id="gender" name="gender" type="text" class="validate">
+                      <label for="mobile">Gender</label>
+                  </div>
+                </div>
+
+                <div class="row">
+                   <div class="input-field col s6">
+                    <input id="password" type="password" name="password" class="validate">
+                    <label for="password">Password</label>
+                   </div>
+                   <div class="input-field col s6">
+                    <input id="location" type="text" name="location" class="validate">
+                    <label for="location">City</label>
+                   </div>
+                </div>
+              <button class="btn cyan darken-3" type= "submit" name="submit" style="margin: 0px;padding: 5px;height: 50px;width: 100%;margin-bottom: 10px ">Sign In</button>
+              </div>
+            </form>            
+        </div>
+        </center>
+    </div>
+
+
+
+
+</body>
+
+</html>

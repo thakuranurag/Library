@@ -1,0 +1,65 @@
+<html>
+<head>
+
+
+<link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<link type="text/css" rel="stylesheet" href="/static/materialize/css/materialize.min.css"  media="screen,projection"/>
+<link type="text/css" rel="stylesheet" href="/static/materialize/css/style.min.css"  media="screen,projection"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<script type="text/javascript" src="http://code.jquery.com/jquery-2.1.1.min.js"></script>
+<script type="text/javascript" src="/static/materialize/js/materialize.min.js"></script>
+
+
+
+<div class="navbar-fixed">    
+  <nav>
+      <div class="nav-wrapper" style="background:#11989E"> 
+          
+          <ul id="nav-mobile" class="right hide-on-med-and-down">
+  
+              
+          </ul>
+      </div>
+  </nav>
+</div>
+
+
+</head>
+
+<body>
+
+
+
+<div class="row" >
+	<center>
+    <div class="card col m12 l2"></div>
+    	<div class="col s12 m5 l4 container" style="margin-left:150px;margin-top: 70px">
+            <form action="/login" style="padding: 20px;" method = "POST" style="margin-top: 0px">
+       <!--      <center><img src="/media/pic/admin.png" style="height: 100px;z-index:10;position: relative; top: 12px"></center>    -->
+              <div class="card" style="padding: 20px; top: -40px;z-index: 0">
+                <div class="row" style="position: relative;top: 30px">
+                    <div class="input-field col s12">
+                      <input id="mobile" name="mobile" type="text" class="validate" name="login_mobile" required>
+                      <label for="mobile">Mobile</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="input-field col s12">
+                      <input id="password" name= "password" type="password" class="validate" name="login_password" required>
+                      <label for="password">Password</label>
+                    </div>
+                </div>
+              <button class="btn cyan darken-3 " type= "submit" name="submit" style="margin: 0px;padding: 5px;height: 50px;width: 100%;margin-bottom: 10px ">Sign In</button>
+              </div>
+            </form>     
+            <a href="/register">New User? Register here</a>       
+        </div>
+        </center>
+    </div>
+
+
+
+
+</body>
+
+</html>
