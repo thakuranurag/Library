@@ -8,18 +8,18 @@ import random
 from datetime import datetime
 
 def insertUser(request):
-    con = sql.connect("Flask_DB.db")
+    con = sql.connect("LibraryData.db")
     print("yaha tak chal raha hai")
     print("user name " + request.form['username'])
-    sqlQuery = "select mobile from userdata where (mobile ='" + request.form['mobile'] + "')"
+    sqlQuery = "select mobile from user_data where (mobile ='" + request.form['mobile'] + "')"
     cur = con.cursor()
     cur.execute(sqlQuery)
     row = cur.fetchone()
     
     if not row:
-        cur.execute("INSERT INTO userdata (username,mobile,email,password,gender,location) VALUES (?,?,?,?,?,?)", (request.form['username'], 
+        cur.execute("INSERT INTO user_data (username,mobile,email,password,user_type) VALUES (?,?,?,?,?,?)", (request.form['username'], 
                    request.form['mobile'],request.form['email'],sha256_crypt.encrypt(request.form['password'])
-                   ,request.form['gender'],request.form['location']))
+                   ,request.form['user_type']))
         con.commit()
         print "added user successfully"
 
@@ -29,8 +29,8 @@ def insertUser(request):
 
 
 def authenticate(request):
-    con = sql.connect("Flask_DB.db")
-    sqlQuery = "select password from userdata where mobile = '%s'"%request.form['mobile']  
+    con = sql.connect("LibraryData.db")
+    sqlQuery = "select password from user_data where mobile = '%s'"%request.form['mobile']  
     cursor = con.cursor()
     cursor.execute(sqlQuery)
     row = cursor.fetchone()
@@ -42,7 +42,7 @@ def authenticate(request):
 
 
 def otp_verification(request):
-    con = sql.connect("Flask_DB.db")
+    con = sql.connect("LibraryData.db")
     mobile=session['mobile']
     cur = con.cursor()
     cur.execute("SELECT otp FROM otp_data where mobile= "+ mobile +" ")

@@ -22,7 +22,20 @@
       </div>
   </nav>
 </div>
+<script type="text/javascript">
+  
+ document.addEventListener('DOMContentLoaded', function() {
+    var elems = document.querySelectorAll('select');
+    var instances = M.FormSelect.init(elems, options);
+  });
 
+  // Or with jQuery
+
+  $(document).ready(function(){
+    $('select').formSelect();
+  });
+
+</script>
 
 </head>
 
@@ -32,12 +45,22 @@
 
 <div class="row" >
 	<center>
-    <div class="card col m12 l2"></div>
-    	<div class="col s12 m5 l4 container" style="margin-left:150px;margin-top: 70px">
+    	<div class="col s12 m5 l4 container" style="margin-left:30%;margin-right:20% ;width: 40%;padding-top: 50px">
             <form action="/login" style="padding: 20px;" method = "POST" style="margin-top: 0px">
        <!--      <center><img src="/media/pic/admin.png" style="height: 100px;z-index:10;position: relative; top: 12px"></center>    -->
               <div class="card" style="padding: 20px; top: -40px;z-index: 0">
-                <div class="row" style="position: relative;top: 30px">
+               <div class="row">
+                <div class="input-field col s12">
+                    <select id="usertype" name= "usertype" >
+                      <option value="" disabled selected>Choose your option</option>
+                      <option value="1">Admin</option>
+                      <option value="2">Librarian</option>
+                      <option value="3">Student</option>
+                    </select>
+                    <label>login as</label>
+                  </div>
+                  </div>
+                <div class="row">
                     <div class="input-field col s12">
                       <input id="mobile" name="mobile" type="text" class="validate" name="login_mobile" required>
                       <label for="mobile">Mobile</label>
@@ -48,11 +71,11 @@
                       <input id="password" name= "password" type="password" class="validate" name="login_password" required>
                       <label for="password">Password</label>
                     </div>
-                </div>
               <button class="btn cyan darken-3 " type= "submit" name="submit" style="margin: 0px;padding: 5px;height: 50px;width: 100%;margin-bottom: 10px ">Sign In</button>
               </div>
+              <a href="/register">New User? Register here</a>  
+              </div>
             </form>     
-            <a href="/register">New User? Register here</a>       
         </div>
         </center>
     </div>
