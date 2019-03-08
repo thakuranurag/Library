@@ -160,3 +160,47 @@ def home():
         else:
     	   return redirect(url_for('login'))
 
+######################### librarian ################################################
+@app.route('/home', methods=['POST', 'GET'])
+def home():
+    if request.method=='POST':
+        if dbHandler.insertUser(request):
+            msg = "success in adding user"
+        else:
+            msg = "failed to add user"
+
+    return render_template("otpverify.html", message=msg)
+    
+    if request.method=='GET':
+        print("inside GET Method of home")
+        if 'mobile' in session :
+            rows = dbHandler.get_librarian()
+            print("here baby " + str(rows))
+            return render_template("home.html", data = rows)
+
+        else:
+           return redirect(url_for('login'))
+
+
+
+
+######################### student ################################################
+@app.route('/home', methods=['POST', 'GET'])
+def home():
+    if request.method=='POST':
+        if dbHandler.insertUser(request):
+            msg = "success in adding user"
+        else:
+            msg = "failed to add user"
+
+    return render_template("otpverify.html", message=msg)
+    
+    if request.method=='GET':
+        print("inside GET Method of home")
+        if 'mobile' in session :
+            rows = dbHandler.get_librarian()
+            print("here baby " + str(rows))
+            return render_template("home.html", data = rows)
+
+        else:
+           return redirect(url_for('login'))
