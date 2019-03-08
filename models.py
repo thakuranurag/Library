@@ -17,9 +17,9 @@ def insertUser(request):
     row = cur.fetchone()
     
     if not row:
-        cur.execute("INSERT INTO user_data (username,mobile,email,password,user_type) VALUES (?,?,?,?,?,?)", (request.form['username'], 
+        cur.execute("INSERT INTO user_data (username,mobile,email,password,user_type) VALUES (?,?,?,?,?)", (request.form['username'], 
                    request.form['mobile'],request.form['email'],sha256_crypt.encrypt(request.form['password'])
-                   ,request.form['user_type']))
+                   ,request.form['usertype']))
         con.commit()
         print "added user successfully"
 
@@ -39,35 +39,26 @@ def authenticate(request):
        return sha256_crypt.verify(request.form['password'], row[0])
     else:
        return False
-
-
-def otp_verification(request):
-    con = sql.connect("LibraryData.db")
-    mobile=session['mobile']
-    cur = con.cursor()
-    cur.execute("SELECT otp FROM otp_data where mobile= "+ mobile +" ")
-    rows = cur.fetchall()
-    otp=0
-    for r in rows:
-        otp=r[0]
-    return otp
 	
 
-def get_images():
+def get_librarian():
     print("here madafaka")
     response_array=[]
-    path=os.getcwd()
-    print(path)
-    con = sql.connect("Flask_DB.db")
+    mobile=session['mobile']
+    con = sql.connect("LibraryData.db")
         # Uncomment line below if you want output in dictionary format
     #con.row_factory = sql.Row
     cur = con.cursor()
-    cur.execute("SELECT image FROM image_data where mobile='9826122862';")
+    cur.execute("SELECT username,email,user_type FROM user_data where user_type= 2;")
     rows = cur.fetchall()
     for r in rows:
-        response_array.append(str(r[0]))
-
+        temp={}
+        temp['name']=r[0]
+        temp['email']=r[1]
+        temp['user_type']=r[2]
+        response_array.append(temp)
     con.close()
+    print response_array
     return response_array
 
 

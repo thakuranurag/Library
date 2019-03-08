@@ -32,9 +32,6 @@ app.config.update(dict(
 
 mail = Mail(app)
 
-@app.route('/')
-def some():
-    return "gegsgs"
 
 @app.route('/send-mail/')
 def send_mail():
@@ -50,10 +47,15 @@ def send_mail():
 
 @app.route('/')
 def index():
-   if 'username' in session:
-      return render_template("index.html", logged_in = True,  username=session['username'])
-   else:
-      return render_template("index.html", logged_in = False,  username=None)
+    if request.method=='GET':
+        if 'username' in session:
+            return render_template("index.html", logged_in = True,  username=session['username'])
+        else:
+            return render_template("index.html", logged_in = False,  username=None)
+
+    else:
+        print("vvvvvvvvvvv  ")
+        return render_template("login.html")
 
 
 
@@ -66,6 +68,7 @@ def login():
         return redirect(url_for('home'))
 
     elif request.method == 'POST':
+        print("inside")
         if dbHandler.authenticate(request):
             session['mobile'] = request.form['mobile']
             msg = "successful login"
@@ -131,7 +134,7 @@ def otp_verify():
 def logout():
     if 'mobile' in session:
         name = session.pop('mobile')
-        return render_template("result.html", message=name +" has logged out Successfully.")
+        return render_template("index.html")
     
     return render_template("result.html", message="You are already logged out.")
 
@@ -150,8 +153,8 @@ def home():
     if request.method=='GET':
     	print("inside GET Method of home")
     	if 'mobile' in session :
-    		rows = dbHandler.get_images()
-    		print rows
+    		rows = dbHandler.get_librarian()
+    		print("here baby " + str(rows))
         	return render_template("home.html", data = rows)
 
         else:

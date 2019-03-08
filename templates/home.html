@@ -29,13 +29,7 @@
 <div class="navbar-fixed">    
   <nav>
       <div class="nav-wrapper" style="background:#11989E"> 
-      <center>
-              <div class="col s12">
-        <a href="/tweet" class="breadcrumb">Tweets</a>
-        <a href="/home" class="breadcrumb">Images</a>
-        <a href="/headlines" class="breadcrumb">Headlines</a>
-      </div>
-      </center>
+       <a class="btn-floating btn-large waves-effect waves-light red" href="/logout" style="float: right;margin-right: 10px;margin-top: 4px" ><i class="material-icons">power_settings_new</i></a>
       </div>
   </nav>
 </div>
@@ -48,23 +42,28 @@
 {%block content%}
 <div id="container" style="width:100%;">  
 
-         {% for row in data %}  
+       
 
         
-                <div class="row">
+                 <div class="row">
                     <center>
-                      <div class="card"   style="height: 350px; width: 400;"">
-                        <div class="card-image">
-                          <img src="{{url_for('static', filename= row) }}">
-                        </div>
-                        <div class="card-content">
-                          <p>Fucking awesome trip</p>
-                        </div>
+                      <div class="card" style="margin-left: -80px;height: 600; width: 700;">
+                         <table>
+                           <th>USER</th>
+                           <th>EMAIL</th>
+                           <th>USER TYPE</th>
+                             {% for row in data %}  
+                           <tr>
+                             <td>{{ row.name }}</td>
+                             <td>{{ row.email }}</td>
+                           </tr>
+                            {% endfor %}
+                         </table>
                       </div>
                       </center>
                   </div>
 
-         {% endfor %}
+        
 </div>
   
 {% endblock %}
