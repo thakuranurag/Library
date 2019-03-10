@@ -55,6 +55,7 @@ def index():
 
     else:
         print("vvvvvvvvvvv  ")
+        session['user_type']=user_type
         return render_template("login.html")
 
 
@@ -69,13 +70,20 @@ def login():
 
     elif request.method == 'POST':
         print("inside")
-        if dbHandler.authenticate(request):
-            session['mobile'] = request.form['mobile']
-            msg = "successful login"
-            return redirect(url_for('home'))
+        returndata= dbHandler.authenticate(request)
+        print returndata
+        if returndata['success']==True:
+            session['mobile']=request.form['mobile']
+            if returndata['user_type']==1:
+                msg = "successful login"
+                return redirect(url_for('home'))
+            elif returndata['user_type']==2:
+                return redirect(url_for('librarian'))
+            elif returndata['user_type']==3:
+                return redirect(url_for('librarian'))
         else:
             msg ="login failed"
-            return render_template("result.html", message=msg)
+            return render_template("login.html")
 
     return render_template('login.html')
 
@@ -90,20 +98,12 @@ def register():
     if request.method=='POST':
         if dbHandler.insertUser(request):
             msg = "success in adding user"
+            session['mobile'] = request.form['mobile']
+            return redirect(url_for('home'))
         else:
             msg = "failed to add user"
-        session['mobile'] = request.form['mobile']
-        otp=random.randint(1000, 9999)
-        session['otp']=otp
-        dbHandler.insertotp(request)
-        msg = mail.send_message(
-        'Send Mail tutorial!',
-        sender='connectevery1@gmail.com',
-        recipients=['anuragt0007@gmail.com'],
-        body="Your one time password for this anonymous website is " + str(otp) + " will be valid for lifetime..."
-    )
-
-	return redirect(url_for('otp_verify'))
+            return redirect(url_for('register'))
+      
     
     if request.method=='GET':
     	print("inside GET Method")
@@ -140,8 +140,8 @@ def logout():
 
 
 ######################### home ################################################
-@app.route('/home', methods=['POST', 'GET'])
-def home():
+@app.route('/librarian', methods=['POST', 'GET'])
+def librarian():
     if request.method=='POST':
         if dbHandler.insertUser(request):
             msg = "success in adding user"
@@ -161,8 +161,8 @@ def home():
     	   return redirect(url_for('login'))
 
 ######################### librarian ################################################
-@app.route('/home', methods=['POST', 'GET'])
-def home():
+@app.route('/student', methods=['POST', 'GET'])
+def student():
     if request.method=='POST':
         if dbHandler.insertUser(request):
             msg = "success in adding user"
@@ -183,22 +183,27 @@ def home():
 
 
 
-
 ######################### student ################################################
 @app.route('/home', methods=['POST', 'GET'])
 def home():
-    if request.method=='POST':
-        if dbHandler.insertUser(request):
-            msg = "success in adding user"
-        else:
-            msg = "failed to add user"
-
-    return render_template("otpverify.html", message=msg)
-    
     if request.method=='GET':
         print("inside GET Method of home")
         if 'mobile' in session :
             rows = dbHandler.get_librarian()
+            print("here baby " + str(rows))
+            return render_template("home.html", data = rows)
+
+        else:
+           return redirect(url_for('login'))
+
+
+
+@app.route('/home2', methods=['POST', 'GET'])
+def home2():
+    if request.method=='GET':
+        print("inside GET Method of home2")
+        if 'mobile' in session :
+            rows = dbHandler.get_students()
             print("here baby " + str(rows))
             return render_template("home.html", data = rows)
 

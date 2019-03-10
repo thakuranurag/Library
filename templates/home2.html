@@ -29,8 +29,8 @@
 <div class="navbar-fixed">    
   <nav>
       <div class="nav-wrapper" style="background:#11989E"> 
-     <center>  <a href="/home" class="breadcrumb">Librarians</a> 
-      <a href="/home2" class="breadcrumb">Students</a> </center>  
+      <center> <a href="/tweet" class="breadcrumb">Tweets</a>
+        <a href="/home" class="breadcrumb">Images</a> </center>   
        <a class="btn-floating btn-large waves-effect waves-light red" href="/logout" style="float: right;margin-right: 10px;margin-top: 4px" ><i class="material-icons">power_settings_new</i></a>
       </div>
   </nav>
@@ -56,9 +56,8 @@
                            <th>USER TYPE</th>
                              {% for row in data %}  
                            <tr>
-                             <td width="30%">{{ row.name }}</td>
-                             <td width="45%"> {{ row.email }}</td>
-                             <td width="25%">{{ row.user_type}}</td>
+                             <td>{{ row.name }}</td>
+                             <td>{{ row.email }}</td>
                            </tr>
                             {% endfor %}
                          </table>

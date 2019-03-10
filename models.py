@@ -11,15 +11,16 @@ def insertUser(request):
     con = sql.connect("LibraryData.db")
     print("yaha tak chal raha hai")
     print("user name " + request.form['username'])
+    doj=datetime.date(datetime.now())
     sqlQuery = "select mobile from user_data where (mobile ='" + request.form['mobile'] + "')"
     cur = con.cursor()
     cur.execute(sqlQuery)
     row = cur.fetchone()
     
     if not row:
-        cur.execute("INSERT INTO user_data (username,mobile,email,password,user_type) VALUES (?,?,?,?,?)", (request.form['username'], 
+        cur.execute("INSERT INTO user_data (username,mobile,email,password,user_type,doj) VALUES (?,?,?,?,?,?)", (request.form['username'], 
                    request.form['mobile'],request.form['email'],sha256_crypt.encrypt(request.form['password'])
-                   ,request.form['usertype']))
+                   ,request.form['usertype'],doj))
         con.commit()
         print "added user successfully"
 
@@ -30,13 +31,16 @@ def insertUser(request):
 
 def authenticate(request):
     con = sql.connect("LibraryData.db")
-    sqlQuery = "select password from user_data where mobile = '%s'"%request.form['mobile']  
+    sqlQuery = "select password,user_type from user_data where mobile = '%s'"%request.form['mobile']  
     cursor = con.cursor()
     cursor.execute(sqlQuery)
     row = cursor.fetchone()
     con.close()
     if row:
-       return sha256_crypt.verify(request.form['password'], row[0])
+        temp={}
+        temp['success']=sha256_crypt.verify(request.form['password'], row[0])
+        temp['user_type']=row[1]
+        return temp
     else:
        return False
 	
@@ -49,7 +53,7 @@ def get_librarian():
         # Uncomment line below if you want output in dictionary format
     #con.row_factory = sql.Row
     cur = con.cursor()
-    cur.execute("SELECT username,email,user_type FROM user_data where user_type= 2;")
+    cur.execute("select user_data.username,user_data.email,user_type_data.type from user_data,user_type_data where user_data.user_type=user_type_data.id and user_data.user_type=2;")
     rows = cur.fetchall()
     for r in rows:
         temp={}
@@ -61,7 +65,7 @@ def get_librarian():
     print response_array
     return response_array
 
-
+#################    not using these APIs   #######################
 def insertotp(request):
     con = sql.connect("Flask_DB.db")
     mobile=session['mobile']
@@ -92,24 +96,27 @@ def getOtp(request):
     con.close()
     return not row
 
+#################    not using these APIs   #######################
 
-def insertTweet(request):
-    con = sql.connect("Flask_DB.db")
+def get_students():
+    print("here madafaka")
+    response_array=[]
     mobile=session['mobile']
-    tweet = request.form['tweet']
-    added_on=datetime.date(datetime.now())
-
-    sl = getSl(mobile)
-    sl=sl+1
-
-    print(">>>> "+ str(mobile) +"  >> " + str(tweet) +" >> "+str(added_on))
+    con = sql.connect("LibraryData.db")
+        # Uncomment line below if you want output in dictionary format
+    #con.row_factory = sql.Row
     cur = con.cursor()
-    cur.execute("INSERT INTO tweet_data (mobile,sl,tweet,added_on) VALUES (?,?,?,?)", (mobile,sl,tweet,added_on))
-    print "tweet added successfully"
-    
-    con.commit()   
+    cur.execute("select user_data.username,user_data.email,user_type_data.type from user_data,user_type_data where user_data.user_type=user_type_data.id and user_data.user_type=3;")
+    rows = cur.fetchall()
+    for r in rows:
+        temp={}
+        temp['name']=r[0]
+        temp['email']=r[1]
+        temp['user_type']=r[2]
+        response_array.append(temp)
     con.close()
-    return "success"
+    print response_array
+    return response_array
 
 
 def get_tweet():
@@ -153,8 +160,6 @@ def getSl(mobile):
     con.close()
     print("serial is " + str(sl))
     return sl
-
-
 
 
 
